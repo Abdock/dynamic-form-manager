@@ -6,4 +6,5 @@ namespace Persistence.Entities;
 public class Post : BaseEntity
 {
     public required JsonNode Node { get; init; }
+    public required string SearchText { get; init; }
 }

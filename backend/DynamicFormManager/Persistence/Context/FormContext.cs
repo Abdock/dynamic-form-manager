@@ -3,15 +3,15 @@ using Persistence.Entities;
 
 namespace Persistence.Context;
 
-public class FromContext : DbContext
+public class FormContext : DbContext
 {
     public DbSet<Post> Posts { get; init; }
 
-    protected FromContext()
+    protected FormContext()
     {
     }
 
-    public FromContext(DbContextOptions options) : base(options)
+    public FormContext(DbContextOptions options) : base(options)
     {
     }
 }
