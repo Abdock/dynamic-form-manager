@@ -10,5 +10,5 @@ public record PostResponse
     public required JsonNode Node { get; init; }
 
     [JsonIgnore]
-    public required string SearchText { get; init; }
+    public string SearchText { get; init; } = string.Empty;
 }

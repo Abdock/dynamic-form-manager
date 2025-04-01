@@ -18,7 +18,6 @@ public class EnrichLogContextByGeneralDataMiddleware
         var username = httpContext.User.GetEmail();
         using var usernameProperty = LogContext.PushProperty(LoggingConstants.UsernameKey, username);
         using var correlationIdProperty = LogContext.PushProperty(LoggingConstants.CorrelationIdKey, httpContext.TraceIdentifier);
-        using var endpointProperty = LogContext.PushProperty(LoggingConstants.EndpointKey, httpContext.Request.Path);
         await _next(httpContext);
     }
 }

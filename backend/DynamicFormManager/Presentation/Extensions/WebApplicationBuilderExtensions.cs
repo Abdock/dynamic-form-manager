@@ -24,6 +24,7 @@ public static class WebApplicationBuilderExtensions
     public static WebApplicationBuilder ConfigureControllers(this WebApplicationBuilder builder)
     {
         builder.Services.AddControllers();
+        builder.Services.AddOpenApi();
         return builder;
     }
 
@@ -75,7 +76,7 @@ public static class WebApplicationBuilderExtensions
 
     public static WebApplicationBuilder ConfigureLogging(this WebApplicationBuilder builder)
     {
-        const string logMessageTemplate = "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} {EnvironmentName} {CorrelationId} {Level:u3}] {Username} {ClientIp} {Endpoint} {Message:lj}{NewLine}{Exception}";
+        const string logMessageTemplate = "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} {EnvironmentName} {CorrelationId} {Level:u3}] {Username} {ClientIp} {RequestPath} {Message:lj}{NewLine}{Exception}";
         var logger = new LoggerConfiguration()
             .Enrich.FromLogContext()
             .Enrich.WithEnvironmentName()

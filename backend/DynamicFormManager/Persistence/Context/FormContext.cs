@@ -15,4 +15,9 @@ public class FormContext : DbContext
     public FormContext(DbContextOptions options) : base(options)
     {
     }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(FormContext).Assembly);
+    }
 }

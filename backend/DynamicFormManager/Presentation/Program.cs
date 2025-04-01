@@ -1,5 +1,6 @@
 using Presentation.Constants;
 using Presentation.Extensions;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args)
     .ConfigureLogging()
@@ -15,6 +16,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.MapScalarApiReference();
 }
 
 app.UseHttpsRedirection();
