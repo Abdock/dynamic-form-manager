@@ -1,4 +1,4 @@
-﻿namespace Presentation.DTO.Inputs;
+﻿namespace Presentation.DTO.Inputs.Auth;
 
 public record LoginInput
 {

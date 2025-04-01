@@ -1,4 +1,7 @@
-﻿using Application.DTO.Requests.Posts;
+﻿using Application.DTO.Mapping;
+using Application.DTO.Requests.Posts;
+using Application.DTO.Responses.General;
+using Application.DTO.Responses.Posts;
 using Application.Services.SearchText;
 using Mediator;
 using Microsoft.EntityFrameworkCore;
@@ -7,12 +10,12 @@ using Persistence.Entities;
 
 namespace Application.CQRS.Commands.Posts;
 
-public class CreatePostCommand : ICommand
+public class CreatePostCommand : ICommand<BaseResponse<PostResponse>>
 {
     public required CreatePostRequest Request { get; init; }
 }
 
-public class CreatePostCommandHandler : ICommandHandler<CreatePostCommand>
+public class CreatePostCommandHandler : ICommandHandler<CreatePostCommand, BaseResponse<PostResponse>>
 {
     private readonly IDbContextFactory<FormContext> _contextFactory;
     private readonly ISearchTextProvider _searchTextProvider;
@@ -23,7 +26,7 @@ public class CreatePostCommandHandler : ICommandHandler<CreatePostCommand>
         _searchTextProvider = searchTextProvider;
     }
 
-    public async ValueTask<Unit> Handle(CreatePostCommand command, CancellationToken cancellationToken)
+    public async ValueTask<BaseResponse<PostResponse>> Handle(CreatePostCommand command, CancellationToken cancellationToken)
     {
         await using var context = await _contextFactory.CreateDbContextAsync(cancellationToken);
         var searchText = _searchTextProvider.GetSearchText(command.Request.Node);
@@ -34,6 +37,6 @@ public class CreatePostCommandHandler : ICommandHandler<CreatePostCommand>
         };
         await context.Posts.AddAsync(post, cancellationToken);
         await context.SaveChangesAsync(cancellationToken);
-        return Unit.Value;
+        return post.MapToResponse();
     }
 }

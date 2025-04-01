@@ -13,4 +13,12 @@ public static class PostMapping
         Node = post.Node,
         SearchText = post.SearchText
     };
+
+    public static PostResponse MapToResponse(this Post post) => new()
+    {
+        Id = post.Id,
+        Node = post.Node,
+        CreatedAt = post.CreatedAt,
+        SearchText = post.SearchText
+    };
 }

@@ -5,7 +5,7 @@ using Application.DTO.Responses.Users;
 using Mediator;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Presentation.DTO.Inputs;
+using Presentation.DTO.Inputs.Auth;
 using Presentation.DTO.Mapping;
 using Presentation.Extensions;
 
@@ -13,11 +13,11 @@ namespace Presentation.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class UserController : ControllerBase
+public class UsersController : ControllerBase
 {
     private readonly IMediator _mediator;
 
-    public UserController(IMediator mediator)
+    public UsersController(IMediator mediator)
     {
         _mediator = mediator;
     }

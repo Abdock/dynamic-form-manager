@@ -1,5 +1,5 @@
 ﻿using Application.DTO.Requests.Auth;
-using Presentation.DTO.Inputs;
+using Presentation.DTO.Inputs.Auth;
 
 namespace Presentation.DTO.Mapping;
 
