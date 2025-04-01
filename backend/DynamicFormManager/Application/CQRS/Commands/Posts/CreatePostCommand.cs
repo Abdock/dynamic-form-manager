@@ -1,4 +1,5 @@
 ﻿using Application.DTO.Mapping;
+using Application.DTO.Requests.Auth;
 using Application.DTO.Requests.Posts;
 using Application.DTO.Responses.General;
 using Application.DTO.Responses.Posts;
@@ -13,6 +14,7 @@ namespace Application.CQRS.Commands.Posts;
 public class CreatePostCommand : ICommand<BaseResponse<PostResponse>>
 {
     public required CreatePostRequest Request { get; init; }
+    public required AuthorizedUserRequest User { get; init; }
 }
 
 public class CreatePostCommandHandler : ICommandHandler<CreatePostCommand, BaseResponse<PostResponse>>
@@ -34,6 +36,7 @@ public class CreatePostCommandHandler : ICommandHandler<CreatePostCommand, BaseR
         {
             Node = command.Request.Node,
             SearchText = searchText,
+            UserId = command.User.UserId
         };
         await context.Posts.AddAsync(post, cancellationToken);
         await context.SaveChangesAsync(cancellationToken);

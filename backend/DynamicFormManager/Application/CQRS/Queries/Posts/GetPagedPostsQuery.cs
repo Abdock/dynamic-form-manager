@@ -9,21 +9,21 @@ using Persistence.Context;
 
 namespace Application.CQRS.Queries.Posts;
 
-public class GetPostsQuery : IQuery<PagedResponse<PostResponse>>
+public class GetPagedPostsQuery : IQuery<PagedResponse<PostResponse>>
 {
     public required QueryRequest Request { get; init; }
 }
 
-public class GetPostsQueryHandler : IQueryHandler<GetPostsQuery, PagedResponse<PostResponse>>
+public class GetPagedPostsQueryHandler : IQueryHandler<GetPagedPostsQuery, PagedResponse<PostResponse>>
 {
     private readonly IDbContextFactory<FormContext> _contextFactory;
 
-    public GetPostsQueryHandler(IDbContextFactory<FormContext> contextFactory)
+    public GetPagedPostsQueryHandler(IDbContextFactory<FormContext> contextFactory)
     {
         _contextFactory = contextFactory;
     }
 
-    public async ValueTask<PagedResponse<PostResponse>> Handle(GetPostsQuery query, CancellationToken cancellationToken)
+    public async ValueTask<PagedResponse<PostResponse>> Handle(GetPagedPostsQuery query, CancellationToken cancellationToken)
     {
         await using var context = await _contextFactory.CreateDbContextAsync(cancellationToken);
         var response = await context.Posts

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.DTO.Inputs.Posts;
 using Presentation.DTO.Mapping;
+using Presentation.Extensions;
 
 namespace Presentation.Controllers;
 
@@ -27,7 +28,7 @@ public class PostsController : ControllerBase
     {
         var cancellationToken = HttpContext.RequestAborted;
         var request = input.MapToRequest();
-        var query = new GetPostsQuery
+        var query = new GetPagedPostsQuery
         {
             Request = request
         };
@@ -43,7 +44,8 @@ public class PostsController : ControllerBase
         var request = input.MapToRequest();
         var command = new CreatePostCommand
         {
-            Request = request
+            Request = request,
+            User = User.GetUser()
         };
         var response = await _mediator.Send(command, cancellationToken);
         return CreatedAtAction(nameof(Get), new { id = response.Response!.Id }, response);

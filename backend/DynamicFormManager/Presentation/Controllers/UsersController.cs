@@ -1,11 +1,16 @@
 ﻿using Application.CQRS.Commands.Auth;
+using Application.CQRS.Queries.Posts;
 using Application.CQRS.Queries.User;
+using Application.DTO.Requests.Posts;
 using Application.DTO.Responses.Auth;
+using Application.DTO.Responses.General;
+using Application.DTO.Responses.Posts;
 using Application.DTO.Responses.Users;
 using Mediator;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.DTO.Inputs.Auth;
+using Presentation.DTO.Inputs.Posts;
 using Presentation.DTO.Mapping;
 using Presentation.Extensions;
 
@@ -59,6 +64,24 @@ public class UsersController : ControllerBase
             Request = User.GetUser()
         };
         var response = await _mediator.Send(command, cancellationToken);
+        return Ok(response);
+    }
+
+    [HttpGet]
+    [Route("{id:guid}/posts")]
+    public async Task<ActionResult<PagedResponse<PostResponse>>> UserPosts([FromRoute] Guid id, [FromQuery] GetPagedPostsInput input)
+    {
+        var cancellationToken = HttpContext.RequestAborted;
+        var request = new GetUserPostsRequest
+        {
+            UserId = id,
+            Query = input.MapToRequest()
+        };
+        var query = new GetUserPagedPostsQuery
+        {
+            Request = request
+        };
+        var response = await _mediator.Send(query, cancellationToken);
         return Ok(response);
     }
 }
