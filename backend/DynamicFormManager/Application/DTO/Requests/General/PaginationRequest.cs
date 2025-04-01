@@ -3,11 +3,11 @@
 public record PaginationRequest
 {
     public required int Skip { get; init; }
-    public required int Limit { get; init; }
+    public required int Take { get; init; }
 
-    public static readonly PaginationRequest Empty = new()
+    public static readonly PaginationRequest Default = new()
     {
         Skip = 0,
-        Limit = 50
+        Take = 50
     };
 }
