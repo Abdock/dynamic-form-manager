@@ -9,26 +9,37 @@ public class DummySearchTextProvider : ISearchTextProvider
 {
     public string GetSearchText(JsonNode node)
     {
-        var searchTextBuilder = new StringBuilder();
-        foreach (var (_, value) in node.AsObject())
+        if (node.GetValueKind() == JsonValueKind.String)
         {
-            if (value is null)
-            {
-                continue;
-            }
+            return node.GetValue<string>();
+        }
 
-            if (value.GetValueKind() != JsonValueKind.String)
+        var searchTextBuilder = new StringBuilder();
+        if (node.GetValueKind() == JsonValueKind.Array)
+        {
+            foreach (var child in node.AsArray())
             {
-                continue;
-            }
+                if (child is null)
+                {
+                    continue;
+                }
 
-            var propertyValue = value.GetValue<string>();
-            if (Base64.IsValid(propertyValue))
+                var value = GetSearchText(child);
+                searchTextBuilder.AppendLine(value);
+            }
+        }
+        else if (node.GetValueKind() == JsonValueKind.Object)
+        {
+            foreach (var (_, child) in node.AsObject())
             {
-                continue;
-            }
+                if (child is null)
+                {
+                    continue;
+                }
 
-            searchTextBuilder.AppendLine(propertyValue);
+                var value = GetSearchText(child);
+                searchTextBuilder.AppendLine(value);
+            }
         }
 
         return searchTextBuilder.ToString();

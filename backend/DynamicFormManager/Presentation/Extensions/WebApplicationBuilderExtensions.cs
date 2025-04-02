@@ -102,10 +102,9 @@ public static class WebApplicationBuilderExtensions
         {
             options.AddPolicy(policyName, policyBuilder =>
             {
-                policyBuilder.SetIsOriginAllowed(_ => true)
+                policyBuilder.AllowAnyOrigin()
                     .AllowAnyHeader()
-                    .AllowAnyMethod()
-                    .AllowCredentials();
+                    .AllowAnyMethod();
             });
         });
         return builder;
