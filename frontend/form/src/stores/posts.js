@@ -31,7 +31,7 @@ export const usePostsStore = defineStore('posts', () => {
         error.value = null;
 
         try {
-            const node = JSON.parse(JSON.stringify(nodeData)); // Ensure the data is serializable
+            const node = JSON.parse(JSON.stringify(nodeData));
             const result = await api.createPost(node);
             return result;
         } catch (err) {

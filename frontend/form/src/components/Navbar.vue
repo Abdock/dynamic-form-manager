@@ -25,6 +25,7 @@ const logout = () => {
             <div class="navbar-links">
                 <router-link to="/" class="nav-link">Home</router-link>
                 <router-link to="/posts" class="nav-link">Posts</router-link>
+                <router-link to="/posts/create" class="nav-link">Create post</router-link>
             </div>
 
             <div class="navbar-auth">
@@ -50,10 +51,10 @@ const logout = () => {
     position: sticky;
     top: 0;
     z-index: 100;
+    width: 100%;
 }
 
 .navbar-container {
-    max-width: 1200px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;

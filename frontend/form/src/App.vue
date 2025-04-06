@@ -5,12 +5,10 @@ import Navbar from './components/Navbar.vue';
 </script>
 
 <template>
-    <div class="app">
-        <Navbar />
-        <main class="main-content">
-            <RouterView />
-        </main>
-    </div>
+    <Navbar />
+    <main class="main-content">
+        <RouterView />
+    </main>
 </template>
 
 <style>
@@ -22,12 +20,6 @@ body {
     background-color: #f5f5f7;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     line-height: 1.5;
-}
-
-.app {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
 }
 
 .main-content {

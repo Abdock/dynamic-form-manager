@@ -15,10 +15,8 @@ const itemsPerPage = ref(10);
 
 const totalPages = computed(() => Math.ceil(postsStore.totalPosts / itemsPerPage.value));
 
-// Calculate current skip value based on page and items per page
 const currentSkip = computed(() => (currentPage.value - 1) * itemsPerPage.value);
 
-// Format date to a more readable format
 const formatDate = (dateString) => {
     const date = new Date(dateString);
     return new Intl.DateTimeFormat('en-US', {
@@ -30,39 +28,32 @@ const formatDate = (dateString) => {
     }).format(date);
 };
 
-// Load posts on component mount
 onMounted(async () => {
     await loadPosts();
 });
 
-// Load posts with pagination and optional search
 const loadPosts = async () => {
     await postsStore.fetchPosts(currentSkip.value, itemsPerPage.value, searchText.value);
 };
 
-// Handle page change
 const changePage = async (page) => {
     if (page < 1 || page > totalPages.value) return;
 
     currentPage.value = page;
     await loadPosts();
 
-    // Scroll to top of the list
     window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
-// Handle search
 const handleSearch = async () => {
-    currentPage.value = 1; // Reset to first page on new search
+    currentPage.value = 1;
     await loadPosts();
 };
 
-// Navigate to create post page
 const goToCreatePost = () => {
     router.push('/posts/create');
 };
 
-// Navigate to post details
 const viewPostDetails = (postId) => {
     router.push(`/posts/${postId}`);
 };
@@ -116,8 +107,7 @@ const viewPostDetails = (postId) => {
             >
                 <div class="post-content">
                     <div class="post-preview">
-                        <!-- Display a preview of the post content -->
-                        {{ JSON.stringify(post.node).substring(0, 100) }}...
+                        <span class="title">{{post.node.title}}</span>
                     </div>
                     <div class="post-date">
                         Posted on {{ formatDate(post.createdAt) }}
@@ -284,5 +274,10 @@ const viewPostDetails = (postId) => {
 .page-info {
     font-size: 0.9rem;
     color: #555;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: 500;
 }
 </style>

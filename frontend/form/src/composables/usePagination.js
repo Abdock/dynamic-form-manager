@@ -32,7 +32,7 @@ export function usePagination(itemsFetcher, options = {}) {
 
     const setPageSize = (size) => {
         pageSize.value = size;
-        currentPage.value = 1; // Reset to first page when changing page size
+        currentPage.value = 1;
         fetchItems();
     };
 

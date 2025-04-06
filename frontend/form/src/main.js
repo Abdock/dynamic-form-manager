@@ -7,8 +7,5 @@ import './style.css'
 const app = createApp(App)
 
 app.use(createPinia())
-
-// Initialize router
-app.use(router)
-
-app.mount('#app')
+    .use(router)
+    .mount('#app')

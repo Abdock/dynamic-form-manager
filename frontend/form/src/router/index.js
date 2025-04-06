@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { useAuthStore } from '../stores/auth';
 
-// Lazy-loaded components
 const Home = () => import('../views/HomeView.vue');
 const Login = () => import('../views/LoginView.vue');
 const Register = () => import('../views/RegisterView.vue');
@@ -51,7 +50,6 @@ const router = createRouter({
     routes
 });
 
-// Navigation guard
 router.beforeEach((to, from, next) => {
     const authStore = useAuthStore();
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth);

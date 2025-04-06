@@ -13,10 +13,8 @@ const confirmPassword = ref('');
 const registerError = ref('');
 
 const handleRegister = async () => {
-    // Reset error
     registerError.value = '';
 
-    // Validate form
     if (!username.value || !email.value || !password.value || !confirmPassword.value) {
         registerError.value = 'Please fill in all fields';
         return;

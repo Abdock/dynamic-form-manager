@@ -1,4 +1,4 @@
-const API_URL = '/api';
+const API_URL = 'https://localhost:7048/api';
 
 export const api = {
     async login(email, password) {
@@ -52,6 +52,7 @@ export const api = {
                 throw new Error('No authentication token found');
             }
 
+            console.log(token);
             const response = await fetch(`${API_URL}/users/me`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -70,7 +71,6 @@ export const api = {
         }
     },
 
-    // Posts endpoints
     async getPosts(skip = 0, take = 10, searchText = '') {
         try {
             let url = `${API_URL}/posts?skip=${skip}&take=${take}`;

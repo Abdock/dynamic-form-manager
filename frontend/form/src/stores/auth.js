@@ -16,6 +16,7 @@ export const useAuthStore = defineStore('auth', () => {
 
         try {
             const response = await api.login(email, password);
+            console.log(response);
             token.value = response.accessToken;
             localStorage.setItem('token', response.accessToken);
             await fetchUserInfo();
@@ -34,6 +35,7 @@ export const useAuthStore = defineStore('auth', () => {
 
         try {
             const response = await api.register(email, username, password);
+            console.log(response);
             token.value = response.accessToken;
             localStorage.setItem('token', response.accessToken);
             await fetchUserInfo();
@@ -57,7 +59,7 @@ export const useAuthStore = defineStore('auth', () => {
             user.value = userData;
         } catch (err) {
             error.value = err.message || 'Failed to get user info';
-            logout(); // Force logout if token is invalid
+            logout();
         } finally {
             loading.value = false;
         }
@@ -69,7 +71,6 @@ export const useAuthStore = defineStore('auth', () => {
         localStorage.removeItem('token');
     }
 
-    // Initialize by trying to fetch user data if we have a token
     if (token.value) {
         fetchUserInfo();
     }
