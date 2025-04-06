@@ -4,6 +4,7 @@ using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args)
     .ConfigureLogging()
+    .ConfigureValidators()
     .ConfigureCqrs()
     .ConfigureAuthenticationAndAuthorization()
     .ConfigureServices()
@@ -19,7 +20,7 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference();
 }
 
-app.UseHttpsRedirection();
+app.UseCustomExceptionHandler();
 app.UseCors(ConfigurationConstant.AllowAllCors);
 app.UseAuthentication();
 app.UseAuthorization();

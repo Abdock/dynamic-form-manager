@@ -9,4 +9,10 @@ public static class WebApplicationExtensions
         application.UseMiddleware<EnrichLogContextByGeneralDataMiddleware>();
         return application;
     }
+
+    public static IApplicationBuilder UseCustomExceptionHandler(this IApplicationBuilder application)
+    {
+        application.UseMiddleware<ExceptionHandlerMiddleware>();
+        return application;
+    }
 }

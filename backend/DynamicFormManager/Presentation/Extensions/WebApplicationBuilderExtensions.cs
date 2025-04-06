@@ -1,8 +1,12 @@
-﻿using System.Text;
+﻿using System.Reflection;
+using System.Text;
+using Application.CQRS.Pipelines;
 using Application.Services.Hasher;
 using Application.Services.Jwt;
 using Application.Services.Jwt.Options;
 using Application.Services.SearchText;
+using FluentValidation;
+using Mediator;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -18,6 +22,7 @@ public static class WebApplicationBuilderExtensions
     public static WebApplicationBuilder ConfigureCqrs(this WebApplicationBuilder builder)
     {
         builder.Services.AddMediator();
+        builder.Services.AddSingleton(typeof(IPipelineBehavior<,>), typeof(ValidationPipeline<,>));
         return builder;
     }
 
@@ -107,6 +112,12 @@ public static class WebApplicationBuilderExtensions
                     .AllowAnyMethod();
             });
         });
+        return builder;
+    }
+
+    public static WebApplicationBuilder ConfigureValidators(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddValidatorsFromAssembly(Assembly.Load(nameof(Application)), ServiceLifetime.Singleton);
         return builder;
     }
 }

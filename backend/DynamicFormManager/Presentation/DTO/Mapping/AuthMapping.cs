@@ -13,8 +13,8 @@ public static class AuthMapping
 
     public static RegisterRequest MapToRequest(this RegisterInput input) => new()
     {
-        Email = input.Email,
+        Email = input.Email.Trim().ToLower(),
         Password = input.Password,
-        Username = input.Username
+        Username = input.Username.Trim()
     };
 }
